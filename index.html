@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <title>Age calculator app</title>
+</head>
+<body>
+<div class="container">
+  <div class="Age-container">
+<div class="up">
+  <label class="day" for="day">Day</label>
+  <br>
+  <input type="number" id="day-input"placeholder="DD" required/>
+</div>
+<div class="month">
+  <label class="up" for="month">Month</label>
+  <br>
+  <input type="number" id="month-input"placeholder="MM" required/>
+</div>
+<div class="year">
+  <label class="up" for="year">Year</label>
+  <br>
+  <input type="number" id="year-input"placeholder="YYYY" required/>
+</div>
+  </div>
+
+  <div class="icon" id="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="46" height="44" viewBox="0 0 46 44">
+      <g fill="none" stroke="#FFF" stroke-width="2"><path d="M1 22.019C8.333 21.686 23 25.616 23 44M23 44V0M45 22.019C37.667 21.686 23 25.616 23 44"/></g>
+    </svg>
+  </div>
+
+  <div class="age-display">
+    <span><span id="this-years">--</span>years</span>
+
+    <span><span id="this-months">--</span>months</span>
+
+    <span><span id="this-days">--</span>days</span>
+  </div>
+</div>
+
+  <div class="attribution">
+    Challenge Coded by <a href="#">Tuke Glory Nwakaego</a>.
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
