@@ -1,5 +1,16 @@
-
 document.getElementById("icon").addEventListener("click", function() {
+    // Clear error classes and messages from previous attempts
+    document.querySelectorAll("input").forEach((input) => {
+        input.classList.remove("err");
+        input.classList.remove("class");
+    });
+    document.querySelectorAll(".up").forEach((input) => {
+        input.classList.remove("err2");
+        input.classList.remove("class");
+    });
+    document.querySelectorAll(".invDay, .invMonth, .invYear").forEach((element) => {
+        element.remove();
+    });
 
     const dayInput = parseInt(document.getElementById("day-input").value);
     const monthInput = parseInt(document.getElementById("month-input").value);
@@ -9,15 +20,15 @@ document.getElementById("icon").addEventListener("click", function() {
     let thismonths = document.getElementById("this-months");
     let thisdays = document.getElementById("this-days");
 
-    if (isValidDate(yearInput, monthInput, dayInput)) {
-        let nowDate = new Date(); 
+    if (isValidDate(yearInput, monthInput, dayInput) && yearInput <= 2023) {
+        let nowDate = new Date();
         let dateInput = new Date(yearInput, monthInput - 1, dayInput);
 
-        let daysDifference = nowDate.getDate() - dayInput; 
+        let daysDifference = nowDate.getDate() - dayInput;
         let monthDifference = nowDate.getMonth() - monthInput + 1;
         let yearDifference = nowDate.getFullYear() - yearInput;
 
-        if (daysDifference < 0) { 
+        if (daysDifference < 0) {
             monthDifference--;
             daysDifference += new Date(nowDate.getFullYear(), nowDate.getMonth(), 0).getDate();
         }
@@ -30,44 +41,37 @@ document.getElementById("icon").addEventListener("click", function() {
         thismonths.innerHTML = monthDifference + " ";
         thisdays.innerHTML = daysDifference + " ";
 
-        //to store calculated values in local storage
-        localStorage.setItem("years", yearDifference)
-        localStorage.setItem("months", monthDifference)
-        localStorage.setItem("days", daysDifference)
+        // Clear stored values from previous attempts
+        localStorage.removeItem("years");
+        localStorage.removeItem("months");
+        localStorage.removeItem("days");
+
+        // Store new calculated values in local storage
+        localStorage.setItem("years", yearDifference);
+        localStorage.setItem("months", monthDifference);
+        localStorage.setItem("days", daysDifference);
     } else {
-
         let inputs = document.querySelectorAll("input");
-
         inputs.forEach((input) => {
             input.classList.add("err");
-            input.classList.remove("class"); 
         });
 
-        let divInput = document.querySelectorAll(".up");
-        divInput.forEach((input) => {
-            input.classList.add("err2");
-            input.classList.remove("class"); 
-        });
+        // Display error messages
+        if (!isValidDate(yearInput, monthInput, dayInput)) {
+            let loseDay = document.createElement("span");
+            let textSpan1 = document.createTextNode("must be a valid date");
+            loseDay.appendChild(textSpan1);
+            loseDay.setAttribute("class", "invDay");
+            document.querySelector(".day").appendChild(loseDay);
+        }
 
-        // day invalid display
-        let loseDay = document.createElement("span");
-        let textSpan1 = document.createTextNode("must be a valid date");
-        loseDay.appendChild(textSpan1);
-        loseDay.setAttribute("class", "invDay");
-        document.querySelector(".day").appendChild(loseDay);
-
-        // month invalid display
-        let loseMonth = document.createElement("span");
-        let textSpan2 = document.createTextNode("must be a valid month");
-        loseMonth.appendChild(textSpan2);
-        loseMonth.setAttribute("class", "invMonth");
-        document.querySelector(".month").appendChild(loseMonth);
-        // year invalid display
-        let loseYear = document.createElement("span");
-        let textSpan3 = document.createTextNode("must be a valid year"); 
-        loseYear.appendChild(textSpan3);
-        loseYear.setAttribute("class", "invYear");
-        document.querySelector(".year").appendChild(loseYear); 
+        if (yearInput > 2023) {
+            let loseYear = document.createElement("span");
+            let textSpan3 = document.createTextNode("incorrect date");
+            loseYear.appendChild(textSpan3);
+            loseYear.setAttribute("class", "invYear");
+            document.querySelector(".year").appendChild(loseYear);
+        }
     }
 
     function isValidDate(year, month, day) {
@@ -75,3 +79,4 @@ document.getElementById("icon").addEventListener("click", function() {
         return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
     }
 });
+
