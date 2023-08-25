@@ -56,6 +56,25 @@ document.getElementById("icon").addEventListener("click", function() {
             input.classList.add("err");
         });
 
+         // Add this part to fetch and display stored values
+         window.addEventListener("DOMContentLoaded", function () {
+            let storedYears = localStorage.getItem("years");
+            let storedMonths = localStorage.getItem("months");
+            let storedDays = localStorage.getItem("days");
+        
+            if (storedYears !== null && storedMonths !== null && storedDays !== null) {
+                document.getElementById("this-years").textContent = storedYears;
+                document.getElementById("this-months").textContent = storedMonths;
+                document.getElementById("this-days").textContent = storedDays;
+            }
+        });
+        
+        function isValidDate(year, month, day) {
+            let date = new Date(year, month - 1, day);
+            return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+        }
+        
+
         // Display error messages
         if (!isValidDate(yearInput, monthInput, dayInput)) {
             let loseDay = document.createElement("span");
